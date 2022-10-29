@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root{
+    @apply h-full;
+    @apply h-screen;
+  }
+  
+  body {
+    @apply bg-pLavender-200;
+    @apply h-screen;
+  }
+  html {
+    @apply scroll-smooth;
+  }
+}
