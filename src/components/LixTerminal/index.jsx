@@ -25,8 +25,7 @@ export function LixTerminal({ name }) {
     <Terminal
 				commands={commands}
 				promptLabel={ ( cont > 0 ? name : 'login' ) + `@Lixterm:~$`}
-        errorText={'O comando \'[command]\' não foi encontado! Use o comando \'help\' para consultar a lista de comandos disponíveis. '}
-        ignoreCommandCase={false}
+        errorText={'O comando \'[command]\' não foi encontrado! Use o comando \'help\' para consultar a lista de comandos disponíveis. '}
         promptLabelStyle={styles.promptL}
 				inputAreaStyle={styles.inputA}
         inputTextStyle={styles.inputText}
