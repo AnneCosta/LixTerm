@@ -1,5 +1,6 @@
 import React from "react";
 import { LixTerminal } from "../../components/LixTerminal";
+import { AsciiRobot } from "../../components/AsciiRobot";
 
 export function Home() {
 	return (
@@ -7,9 +8,7 @@ export function Home() {
 
 			<article className="flex relative inset-y-96">
 				<section className="flex-none">
-					<pre className="w-40">
-						{ Asciibots.bot('01686') }
-					</pre>
+					<AsciiRobot />
 				</section>
 
 				<section className="flex-1">

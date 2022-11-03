@@ -18,7 +18,43 @@ export function LixTerminal({ name }) {
 		  fn: () => {
 				return 'Alô'
 			}
-		}
+		},
+    sudo: {
+      description: "",
+      fn: args => {}
+    },
+    ls: {
+      description: "",
+      fn: () => {
+        return
+      }
+    },
+    cd: {
+      description: "",
+      fn: args => {}
+    },
+    mkdir: {
+      description: "",
+      fn: args => {}
+    },
+    rmdir: {
+      description: "",
+      fn: args => {}
+    },
+    pwd: {
+      description: "",
+      fn: () => {
+        return
+      }
+    },
+    rm: {
+      description: "",
+      fn: args => {}
+    },
+    touch: {
+      description: "",
+      fn: args => {}
+    }
 	}
 
   return (
