@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { createRef } from "react";
 import Terminal from "react-console-emulator";
+import commands from './Commands/commands.js'
 
 export function LixTerminal({ name }) {
-   const cont = 0;
+   const usrPrompt = name + "@/LixTerm:~$ "
    const term = createRef();
-   const [prompt, setPrompt] = useState("login@LixTerm:~$ ");
-   const [home, setHome] = useState("camin");
+   const comms = commands.commands
+   const [prompt, setPrompt] = useState(usrPrompt);
+   const [home, setHome] = useState('LixTerm');
    const [dir, setDir] = useState({
-      camin: [],
+      LixTerm: [],
    });
 
    const styles = {
@@ -23,6 +25,8 @@ export function LixTerminal({ name }) {
       msgText: { color: "#A2BDC7", fontWeight: "300" },
    };
 
+   const sudoCommands = ["update", "-l"]
+
    const cmds = {
       clear: {
          description: "Limpa o terminal",
@@ -33,53 +37,60 @@ export function LixTerminal({ name }) {
       },
 
       sudo: {
-         description: "",
-         fn: (args) => {},
+         description: "Permite executar comandos em modo de superusuário.",
+         usage: "sudo <argumentos>",
+         fn: (args) => {
+            if (args == "update"){
+               return 'Sistema atualizado'
+            }
+
+            if (args == "-l"){
+               return sudoCommands.map((coms) => coms)
+               
+            }
+            
+            return 'Argumento inválido'
+         },
       },
 
       ls: {
-         description: "List files in the current directory",
+         description: "Lista arquivos no diretório atual",
          usage: "ls",
          fn: () => {
-            console.log(dir[home]);
             if (dir[home].length === 0) {
-               return "nothing here :(\nUse mkdir to create a dir inside this one.";
+               return 'Nada aqui :(\nUse mkdir para criar uma pasta dentro desta.';
             } else {
-               return dir[home].join("\n");
+               return dir[home].join('\n');
             }
          },
       },
 
       cd: {
-         description: "Change directory, not really, lol!",
+         description: "Muda de diretório",
          usage: "cd <directory>",
          fn: (...args) => {
-            console.log(dir[home]);
-            if (args.length === 1 && args[0] === "..") {
-               if (prompt === "login@LixTerm:~$ ") {
-                  return "cannot go up";
+            if (args.length===1 && args[0]==='..') {
+               if (prompt === usrPrompt) {
+                  return "Não é mais possível ir um nível acima";
                } else {
                   setPrompt(
                      prompt.substring(0, prompt.lastIndexOf("/")) + ":~$ "
                   );
                   setHome(
                      prompt.substring(
-                        prompt.lastIndexOf("/", prompt.lastIndexOf("/") - 1) +
-                           1,
+                        prompt.lastIndexOf("/", prompt.lastIndexOf("/") - 1)+1,
                         prompt.lastIndexOf("/")
                      )
                   );
-                  console.log(prompt);
-                  console.log(setPrompt);
+                  return;
                }
             } else {
                if (dir[home].includes(args[0])) {
                   setPrompt(
-                     `${prompt.slice(0, -4) + "/" + args.join("/") + ":~$ "}`
+                     `${prompt.slice(0, -4) + "/" + args.join('/') + ":~$ "}`
                   );
                   setHome(args.join("/"));
-                  console.log(prompt);
-                  console.log(setPrompt);
+                  return
                } else {
                   return "Não foi possível encontrar o diretório";
                }
@@ -95,10 +106,10 @@ export function LixTerminal({ name }) {
                setDir({
                   ...dir,
                   [home]: [...dir[home], args[0]],
-                  [args[0]]: [],
+                  [args[0]]:[],
                });
 
-               return;
+               return
             } else {
                return "Argumento inválido";
             }
@@ -110,17 +121,17 @@ export function LixTerminal({ name }) {
          fn: (args) => {},
       },
 
-      pwd: {
-         description: "",
-         fn: () => {
-            // let caminho = places[place];
-            // if (!caminho) {
-            //    return `${place}`;
-            // }
-				console.log(dir)
-            return "waa";
-         },
-      },
+      // pwd: {
+      //    description: "",
+      //    fn: () => {
+      //       // let caminho = places[place];
+      //       // if (!caminho) {
+      //       //    return `${place}`;
+      //       // }
+		// 		console.log(dir)
+      //       return "waa";
+      //    },
+      // },
 
       rm: {
          description: "",
@@ -135,18 +146,21 @@ export function LixTerminal({ name }) {
    return (
       <Terminal
          ref={term}
-         commands={{
-            // helpTest: {
-            // 	description: 'List all available commands',
-            // 	usage: 'help',
-            // 	fn: () => {
-            // 	return `
-            // 		${Object.keys(comms).map(cmd => `${cmd}${" ".repeat(12-cmd.length)} | ${comms[cmd].description}${" ".repeat(39-cmds[cmd].description.length)} | ${cmds[cmd].usage}`).join('\n')}
-            // 	`
-            // 	}
-            // },
+         commands = {{
+            help: {
+               description: 'List all available commands',
+          	   usage: 'help',
+            	fn: () => { 
+                  return ` 
+                     ${Object.keys(comms).map(cmd => `${cmd}${" "} (${comms[cmd].usage}) - ${comms[cmd].description}${" "}`).join('\n')}
 
-            ...cmds,
+                     ${Object.keys(cmds).map(cmd => `${cmd}${" "} (${cmds[cmd].usage}) - ${cmds[cmd].description}${" "}`).join('\n')} 
+                  ` 
+               }
+               
+            },
+
+            ...cmds
          }}
          promptLabel={prompt}
          autoFocus
