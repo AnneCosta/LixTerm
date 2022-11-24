@@ -25,7 +25,7 @@ export function LixTerminal({ name }) {
       msgText: { color: "#A2BDC7", fontWeight: "300" },
    };
 
-   const sudoCommands = ["update", "-l"]
+   const sudoCommands = ["sudo -l -> Lista os comandos com privilégios root \n", "sudo su -> Entra no ambiente root \n", "sudo -h -> Lista de ajuda para comandos \n", "sudo update -> Atualiza o sistema \n", "sudo (programa) -> Executa o programa como super usuario\n"]
 
    const cmds = {
       clear: {
@@ -49,7 +49,7 @@ export function LixTerminal({ name }) {
                
             }
             
-            return 'Argumento inválido'
+            // return 'Argumento inválido'
          },
       },
 
