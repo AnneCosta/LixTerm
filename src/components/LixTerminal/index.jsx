@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { createRef } from "react";
 import Terminal from "react-console-emulator";
-import commands from './Commands/commands.js'
+import commands from '../../pages/Home/Commands/commands.js'
 
 export function LixTerminal({ name }) {
    const usrPrompt = name + "@/LixTerm:~$ "
@@ -25,7 +25,17 @@ export function LixTerminal({ name }) {
       msgText: { color: "#A2BDC7", fontWeight: "300" },
    };
 
-   const sudoCommands = ["sudo -l -> Lista os comandos com privilégios root \n", "sudo su -> Entra no ambiente root \n", "sudo -h -> Lista de ajuda para comandos \n", "sudo update -> Atualiza o sistema \n", "sudo (programa) -> Executa o programa como super usuario\n"]
+   const sudoCommands = [
+      "sudo -l - Lista os comandos com privilégios root \n", 
+      "sudo su - Entra no ambiente root \n", 
+      "sudo -h - Lista de ajuda para comandos \n", 
+      "sudo update - Atualiza o sistema \n", 
+      "sudo (programa) - Executa o programa como super usuario\n"
+   ]
+
+   const updating = [
+      "Baixando atualizações..."
+   ]
 
    const cmds = {
       clear: {
@@ -41,7 +51,10 @@ export function LixTerminal({ name }) {
          usage: "sudo <argumentos>",
          fn: (args) => {
             if (args == "update"){
-               return 'Sistema atualizado'
+               return (
+                  updating.forEach(() => {})
+               )
+               
             }
 
             if (args == "-l"){
@@ -49,7 +62,7 @@ export function LixTerminal({ name }) {
                
             }
             
-            // return 'Argumento inválido'
+            return 'Argumento inválido'
          },
       },
 
@@ -121,18 +134,6 @@ export function LixTerminal({ name }) {
          fn: (args) => {},
       },
 
-      // pwd: {
-      //    description: "",
-      //    fn: () => {
-      //       // let caminho = places[place];
-      //       // if (!caminho) {
-      //       //    return `${place}`;
-      //       // }
-		// 		console.log(dir)
-      //       return "waa";
-      //    },
-      // },
-
       rm: {
          description: "",
          fn: (args) => {},
@@ -142,6 +143,10 @@ export function LixTerminal({ name }) {
          fn: (args) => {},
       },
    };
+
+   function Teste(cmdExec) {
+      return console.log(cmdExec)
+   }
 
    return (
       <Terminal
@@ -174,6 +179,7 @@ export function LixTerminal({ name }) {
          styleEchoBack={"fullInherit"}
          style={styles.default}
          noDefaults
+         commandCallback={ event => { return Teste(event.command) } }
       />
    );
 }
