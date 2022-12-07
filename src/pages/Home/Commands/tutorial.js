@@ -7,7 +7,6 @@ export default {
       cd: "Cd enviado",
       ls: "Ls enviado",
       rm: "Rm enviado",
-      rmdir: "Rmdir enviado",
-      touch: "Touch enviado"
+      man: "Man enviado"
    }
 }

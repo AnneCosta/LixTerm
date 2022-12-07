@@ -9,6 +9,7 @@ export function Home() {
    const usrPrompt = "login@/LixTerm:~$ ";
    const term = createRef();
    const comms = commands.commands;
+   const [callback, setCallback] = useState('')
    const [prompt, setPrompt] = useState(usrPrompt);
    const [home, setHome] = useState('LixTerm');
    const [dir, setDir] = useState({
@@ -125,39 +126,78 @@ export function Home() {
       },
 
       rm: {
-         description: "",
+         description: "Apaga um diretório",
+         usage: "rm <diretório>",
+         fn: (args) => {
+            // if (args.length === 1) {
+            //    setDir({
+            //       ...dir,
+            //       [home]: [...dir[home], args[0]],
+            //       [args[0]]:[],
+            //    });
+
+            // } else {
+            //    return "Argumento inválido";
+            // }
+         },
+      },
+
+      man: {
+         description: "Explica como utilizar um comando",
+         usage: "man <comando>",
          fn: (args) => {},
       },
    };
 
-   // function Teste(ev){
-   //    const callb = ev
 
-   //    if(callb === 'clear'){
-   //       return (
-   //          <span>{ tutorial.msg.clear }</span>   
-   //       )
-   //    }
+   function Messages({ callback }){
+      const [isFinish, setIsFinish] = useState('')
 
-   //    return (
-   //       <span>{ tutorial.msg.welcome }</span> 
-   //    )
-   // }
+      switch(callback){
+         case 'clear':
+            console.log(isFinish)
+            return ( <span>{ tutorial.msg.clear }</span> )
+         case 'sudo':
+            console.log(isFinish)
+            return ( <span>{ tutorial.msg.sudo }</span> )
+         case 'mkdir':
+            console.log(isFinish)
+            return ( <span>{ tutorial.msg.mkdir }</span> )
+         case 'cd':
+            console.log(isFinish)
+            return ( <span>{ tutorial.msg.cd }</span> )
+         case 'ls':
+            console.log(isFinish)
+            return ( <span>{ tutorial.msg.ls }</span> )
+         case 'rm':
+            console.log(isFinish)
+            return ( <span>{ tutorial.msg.rm }</span> )
+         case 'man':
+            console.log(isFinish)
+            setIsFinish(true)
+            console.log(isFinish)
+            return ( <span>{ tutorial.msg.man }</span> )
+         default:
+            return ( <span>{ tutorial.msg.welcome }</span> )
+      }
+   }
 
 	return (
 		<div className="w-full p-5">
-
 			<article className="flex relative inset-y-96">
 				<section className="flex-none">
 					<AsciiRobot />
 				</section>
-
 				<section className="flex-1">
-					<p className="message">{ tutorial.msg.welcome }</p>
+					<p className="message">
+                  { 
+                     <Messages callback= {callback} />
+                  }
+               </p>
 				</section>
 			</article>
 			
-			<article className="">
+			<article>
 				<section className="absolute inset-x-0 bottom-0 p-5">
                <Terminal
                   ref={term}
@@ -189,6 +229,7 @@ export function Home() {
                   styleEchoBack={"fullInherit"}
                   style={styles.default}
                   noDefaults
+                  commandCallback={ event => setCallback(event.command)}
                />
 				</section>
 			</article>
