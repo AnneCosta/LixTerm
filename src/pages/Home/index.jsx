@@ -4,6 +4,7 @@ import { createRef } from "react";
 import Terminal from "react-console-emulator";
 import commands from './Commands/commands'
 import tutorial from "./Commands/tutorial";
+import "./css/styles.css"
 
 export function Home() {
    const usrPrompt = "login@/LixTerm:~$ ";
@@ -18,7 +19,11 @@ export function Home() {
 
 
    const styles = {
-      default: { width: "100%", height: "350px", overflow: "scroll" },
+      default: { 
+         width: "100%", 
+         height: "350px", 
+         overflowX: "scroll"
+      },
       inputA: {
          display: "flex",
          alignItems: "center",
@@ -149,56 +154,47 @@ export function Home() {
       },
    };
 
-
    function Messages({ callback }){
-      const [isFinish, setIsFinish] = useState('')
-
+      
       switch(callback){
          case 'clear':
-            console.log(isFinish)
             return ( <span>{ tutorial.msg.clear }</span> )
          case 'sudo':
-            console.log(isFinish)
             return ( <span>{ tutorial.msg.sudo }</span> )
          case 'mkdir':
-            console.log(isFinish)
             return ( <span>{ tutorial.msg.mkdir }</span> )
          case 'cd':
-            console.log(isFinish)
             return ( <span>{ tutorial.msg.cd }</span> )
          case 'ls':
-            console.log(isFinish)
             return ( <span>{ tutorial.msg.ls }</span> )
          case 'rm':
-            console.log(isFinish)
             return ( <span>{ tutorial.msg.rm }</span> )
          case 'man':
-            console.log(isFinish)
-            setIsFinish(true)
-            console.log(isFinish)
-            return ( <span>{ tutorial.msg.man }</span> )
+            return ( 
+               <span>{ tutorial.msg.man }</span>
+            )
          default:
             return ( <span>{ tutorial.msg.welcome }</span> )
       }
    }
 
-	return (
-		<div className="w-full p-5">
-			<article className="flex relative inset-y-96">
-				<section className="flex-none">
-					<AsciiRobot />
-				</section>
-				<section className="flex-1">
-					<p className="message">
+   return(
+      <div className="w-full p-5">
+         <article className="flex relative inset-y-96">
+            <section className="flex-none">
+               <AsciiRobot />
+            </section>
+            <section className="flex-1">
+               <p className="message">
                   { 
-                     <Messages callback= {callback} />
+                     <Messages callback= {callback} /> 
                   }
                </p>
-				</section>
-			</article>
-			
-			<article>
-				<section className="absolute inset-x-0 bottom-0 p-5">
+            </section>
+         </article>
+         
+         <article>
+            <section className="absolute inset-x-0 bottom-0 p-5">
                <Terminal
                   ref={term}
                   commands = {{
@@ -231,8 +227,8 @@ export function Home() {
                   noDefaults
                   commandCallback={ event => setCallback(event.command)}
                />
-				</section>
-			</article>
-		</div>
-	)
+            </section>
+         </article>
+      </div>
+   )
 }
