@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { AsciiRobot } from "../../components/AsciiRobot";
 import { createRef } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faLink } from '@fortawesome/free-solid-svg-icons'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
 import Terminal from "react-console-emulator";
 import commands from './Commands/commands'
@@ -24,7 +23,7 @@ export function Home() {
    const styles = {
       default: { 
          width: "100%", 
-         height: "350px", 
+         height: "100px", 
          overflowX: "scroll"
       },
       inputA: {
@@ -217,7 +216,7 @@ export function Home() {
                </a>
             </section>
          </section>
-         <article className="flex relative inset-y-80">
+         <article className="flex relative inset-y-52">
             <section className="flex-none">
                <AsciiRobot />
             </section>
