@@ -216,7 +216,7 @@ export function Home() {
                </a>
             </section>
          </section>
-         <article className="flex relative inset-y-52">
+         <article className="flex mt-32">
             <section className="flex-none">
                <AsciiRobot />
             </section>
@@ -227,7 +227,7 @@ export function Home() {
             </section>
          </article>
          <article>
-            <section className="absolute inset-x-0 bottom-0 p-5">
+            <section className="mt-10">
                <Terminal
                   ref={term}
                   commands = {{
