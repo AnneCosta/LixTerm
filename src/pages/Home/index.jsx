@@ -216,7 +216,7 @@ export function Home() {
                </a>
             </section>
          </section>
-         <article className="flex mt-32">
+         <article className="flex mt-20">
             <section className="flex-none">
                <AsciiRobot />
             </section>
