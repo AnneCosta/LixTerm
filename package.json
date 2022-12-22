@@ -9,10 +9,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.2.1",
+    "@fortawesome/free-brands-svg-icons": "^6.2.1",
+    "@fortawesome/free-solid-svg-icons": "^6.2.1",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "react": "^18.2.0",
     "react-console-emulator": "5.0.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.2",
+    "react-slick": "^0.29.0",
+    "react-swipe": "^6.0.4",
+    "swipe-js-iso": "^2.1.5",
     "terminal-js": "^1.0.2"
   },
   "devDependencies": {

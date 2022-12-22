@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { AsciiRobot } from "../../components/AsciiRobot";
 import { createRef } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faLink } from '@fortawesome/free-solid-svg-icons'
+import { faGithub } from '@fortawesome/free-brands-svg-icons'
 import Terminal from "react-console-emulator";
 import commands from './Commands/commands'
-import tutorial from "./Commands/tutorial";
+import { Carousel } from '../../components/Carousel'
 import "./css/styles.css"
 
 export function Home() {
@@ -34,14 +37,6 @@ export function Home() {
       msgText: { color: "#A2BDC7", fontWeight: "300" },
    };
 
-   const sudoCommands = [
-      "sudo -l - Lista os comandos com privilégios root \n", 
-      "sudo su - Entra no ambiente root \n", 
-      "sudo -h - Lista de ajuda para comandos \n", 
-      "sudo update - Atualiza o sistema \n", 
-      "sudo (programa) - Executa o programa como super usuario\n"
-   ]
-
    const cmds = {
       clear: {
          description: "Limpa o terminal",
@@ -57,11 +52,6 @@ export function Home() {
          fn: (args) => {
             if (args == "update"){
                return "Sistema atualizado."
-            }
-
-            if (args == "-l"){
-               return sudoCommands.map((coms) => coms)
-               
             }
             
             return 'Argumento inválido'
@@ -130,76 +120,120 @@ export function Home() {
          },
       },
 
-      rm: {
-         description: "Apaga um diretório",
-         usage: "rm <diretório>",
-         fn: (args) => {
-            // if (args.length === 1) {
-            //    setDir({
-            //       ...dir,
-            //       [home]: [...dir[home], args[0]],
-            //       [args[0]]:[],
-            //    });
+      // rm: {
+      //    description: "Apaga um diretório",
+      //    usage: "rm <diretório>",
+      //    fn: (args) => {
+      //       // if (args.length === 1) {
+      //       //    setDir({
+      //       //       ...dir,
+      //       //       [home]: [...dir[home], args[0]],
+      //       //       [args[0]]:[],
+      //       //    });
 
-            // } else {
-            //    return "Argumento inválido";
-            // }
-         },
-      },
+      //       // } else {
+      //       //    return "Argumento inválido";
+      //       // }
+      //    },
+      // },
 
       man: {
          description: "Explica como utilizar um comando",
          usage: "man <comando>",
-         fn: (args) => {},
+         fn: (args) => {
+            if (args == "ls"){
+               return ( 
+                  <div>
+                     <span><strong>NOME</strong></span>
+                     <p>&nbsp;&nbsp;&nbsp;&nbsp;ls - listar conteúdo do diretório</p>
+                     <span><strong>DESCRIÇÃO</strong></span>
+                     <p>&nbsp;&nbsp;&nbsp;&nbsp;Lista informações sobre os arquivos do diretório atual. </p>
+                  </div>
+               )
+            }
+            if (args == "mkdir"){
+               return ( 
+                  <div>
+                     <span><strong>NOME</strong></span>
+                     <p>&nbsp;&nbsp;&nbsp;&nbsp;mkdir - criar diretórios</p>
+                     <span><strong>DESCRIÇÃO</strong></span>
+                     <p>&nbsp;&nbsp;&nbsp;&nbsp;Cria diretórios, caso eles não existam.</p>
+                  </div>
+               )
+            }
+            if (args == "clear"){
+               return ( 
+                  <div>
+                     <span><strong>NOME</strong></span>
+                     <p>&nbsp;&nbsp;&nbsp;&nbsp;clear - limpa a tela do terminal</p>
+                     <span><strong>DESCRIÇÃO</strong></span>
+                     <p>&nbsp;&nbsp;&nbsp;&nbsp;Limpa a janela do terminal, incluindo os comandos anteriormente digitados na seção.</p>
+                  </div>
+               )
+            }
+            if (args == "sudo"){
+               return ( 
+                  <div>
+                     <span><strong>NOME</strong></span>
+                     <p>&nbsp;&nbsp;&nbsp;&nbsp;sudo - executa o comando como superusuário</p>
+                     <span><strong>DESCRIÇÃO</strong></span>
+                     <p>&nbsp;&nbsp;&nbsp;&nbsp; Permite executar comandos como superusuário, como é especificado pela política de segurança.</p>
+                  </div>
+               )
+            }
+            if (args == "cd"){
+               return ( 
+                  <div>
+                     <span><strong>NOME</strong></span>
+                     <p>&nbsp;&nbsp;&nbsp;&nbsp;cd - muda o diretório de trabalho</p>
+                     <span><strong>DESCRIÇÃO</strong></span>
+                     <p>&nbsp;&nbsp;&nbsp;&nbsp;O utilitário cd muda o diretório de trabalho do atual ambiente de execução.</p>
+                  </div>
+               )
+            }
+            if (args == "man"){
+               return ( 
+                  <div>
+                     <span><strong>NOME</strong></span>
+                     <p>&nbsp;&nbsp;&nbsp;&nbsp;man - uma interface para os manuais de referência do sistema</p>
+                     <span><strong>DESCRIÇÃO</strong></span>
+                     <p>&nbsp;&nbsp;&nbsp;&nbsp;É a página de manual do sistema. Cada argumento de página dado a man é, normalmente, o nome de um programa, utilitário ou função.</p>
+                  </div>
+               )
+            }
+         },
       },
    };
 
-   function Messages({ callback }){
-      
-      switch(callback){
-         case 'clear':
-            return ( <span>{ tutorial.msg.clear }</span> )
-         case 'sudo':
-            return ( <span>{ tutorial.msg.sudo }</span> )
-         case 'mkdir':
-            return ( <span>{ tutorial.msg.mkdir }</span> )
-         case 'cd':
-            return ( <span>{ tutorial.msg.cd }</span> )
-         case 'ls':
-            return ( <span>{ tutorial.msg.ls }</span> )
-         case 'rm':
-            return ( <span>{ tutorial.msg.rm }</span> )
-         case 'man':
-            return ( 
-               <span>{ tutorial.msg.man }</span>
-            )
-         default:
-            return ( <span>{ tutorial.msg.welcome }</span> )
-      }
-   }
-
    return(
       <div className="w-full p-5">
-         <article className="flex relative inset-y-96">
+         <section className="flex justify-between">
+            <h1 className="text-lg" >
+               <strong>LixTerm</strong>
+            </h1>
+            <section>
+               <a href="https://github.com/AnneCosta/LixTerm" >
+                  <FontAwesomeIcon className="text-lg" icon={faGithub} /> Repositório
+               </a>
+            </section>
+         </section>
+         <article className="flex relative inset-y-80">
             <section className="flex-none">
                <AsciiRobot />
             </section>
             <section className="flex-1">
-               <p className="message">
-                  { 
-                     <Messages callback= {callback} /> 
-                  }
-               </p>
+               <article className="max-w-screen-sm">
+                  <Carousel />
+               </article>
             </section>
          </article>
-         
          <article>
             <section className="absolute inset-x-0 bottom-0 p-5">
                <Terminal
                   ref={term}
                   commands = {{
                      help: {
-                        description: 'List all available commands',
+                        description: 'Lista todos os comandos',
                         usage: 'help',
                         fn: () => { 
                            return ` 
