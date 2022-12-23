@@ -12,7 +12,6 @@ export function Home() {
    const usrPrompt = "login@/LixTerm:~$ ";
    const term = createRef();
    const comms = commands.commands;
-   const [callback, setCallback] = useState('')
    const [prompt, setPrompt] = useState(usrPrompt);
    const [home, setHome] = useState('LixTerm');
    const [dir, setDir] = useState({
@@ -118,23 +117,6 @@ export function Home() {
             }
          },
       },
-
-      // rm: {
-      //    description: "Apaga um diretório",
-      //    usage: "rm <diretório>",
-      //    fn: (args) => {
-      //       // if (args.length === 1) {
-      //       //    setDir({
-      //       //       ...dir,
-      //       //       [home]: [...dir[home], args[0]],
-      //       //       [args[0]]:[],
-      //       //    });
-
-      //       // } else {
-      //       //    return "Argumento inválido";
-      //       // }
-      //    },
-      // },
 
       man: {
          description: "Explica como utilizar um comando",
@@ -258,7 +240,6 @@ export function Home() {
                   styleEchoBack={"fullInherit"}
                   style={styles.default}
                   noDefaults
-                  commandCallback={ event => setCallback(event.command)}
                />
             </section>
          </article>
